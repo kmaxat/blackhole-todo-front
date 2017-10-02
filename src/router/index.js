@@ -5,14 +5,16 @@ import register from '../pages/auth/register.vue'
 import passwordEmail from '../pages/auth/password/email.vue'
 import passwordReset from '../pages/auth/password/reset.vue'
 
-import home from '../pages/home.vue'
+// import home from '../pages/home.vue'
+import tasks from '../pages/tasks/list.vue'
 
 
 export default [
   { path: '/', redirect: '/auth/login' },
 
   ...authGuard([
-    { path: '/home', name: 'home', component: home },
+    // { path: '/home', name: 'home', component: home },
+    { path: '/home', name: 'tasks', component: tasks },
 
   ]),
 

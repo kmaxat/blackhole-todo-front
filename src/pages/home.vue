@@ -1,27 +1,27 @@
 <template>
-    <div class="columns">
-      <div class="column">
-        <h2 class="title has-text-centered">Home</h2>
-      </div>
+  <div class="columns">
+    <div class="column">
+      <h3>Next 7 days</h3>
     </div>
+  </div>
 </template>
 <script>
-  export default {
-    name: 'login',
-    layout: 'app',
-    data() {
-      return {
-        title: 'Login',
-        isLoading: false,
-        url: '',
-      };
-    },
-    created(){
+export default {
+  name: 'home',
+  layout: 'app',
+  data() {
+    return {
+      title: 'Home',
+      isLoading: false,
+      url: '',
+    };
+  },
+  created() {
 
-    },
-    methods: {
+  },
+  methods: {
 
-    },
-  }
+  },
+}
 </script>
 

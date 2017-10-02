@@ -33,11 +33,11 @@ export default {
     defaultLayout: 'app'
   }),
 
-  created () {
+  created() {
     this.$root.$loading = this
   },
 
-  mounted () {
+  mounted() {
     this.$loading = this.$refs.loading
   },
 
@@ -47,7 +47,7 @@ export default {
      *
      * @param {String} layout
      */
-    setLayout (layout) {
+    setLayout(layout) {
       if (!layout || !layouts[layout]) {
         layout = this.defaultLayout
       }
