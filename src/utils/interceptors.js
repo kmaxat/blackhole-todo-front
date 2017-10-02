@@ -2,8 +2,10 @@ import axios from 'axios'
 import store from '../store'
 import swal from 'sweetalert2'
 
+//FIXME: is-loading state for buttons doesn't change after failed response
+
 var HTTP = axios.create({
-  baseURL: 'https://blackhole.dev'
+  baseURL: 'http://blackhole.dev'
 })
 
 HTTP.interceptors.request.use(
