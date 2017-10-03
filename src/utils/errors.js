@@ -32,7 +32,7 @@ export default class Errors {
      */
     get(field) {
         if (this.errors[field]) {
-            if(Array.isArray(this.errors[field]))
+            if (Array.isArray(this.errors[field]))
                 return this.errors[field][0];
             else
                 return this.errors[field]
