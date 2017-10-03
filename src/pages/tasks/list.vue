@@ -26,12 +26,12 @@ export default {
     },
     methods: {
         ...mapActions([
-            'fetchTasks'
+            'getTasks'
         ])
 
     },
     created() {
-        this.fetchTasks();
+        this.getTasks();
     }
 }
 </script>

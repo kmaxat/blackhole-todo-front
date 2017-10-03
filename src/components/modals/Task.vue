@@ -1,6 +1,6 @@
 <template>
     <div class="box">
-        <h2 class="title">Quick add task</h2>
+        <h2 class="title">{{ title }}</h2>
         <div class="columns">
             <div class="column">
                 <div class="field">
@@ -38,7 +38,8 @@
                     <p class="help is-danger" v-if="form.errors.has('project_id')">{{ form.errors.get('project_id') }}</p>
                 </div>
                 <div class="control">
-                    <button class="button is-primary" @click="submitTask">Add task</button>
+                    <button class="button is-primary" @click="submit" v-if="!this.data.task">Add task</button>
+                    <button class="button is-success" @click="update" v-if="this.data.task">Save changes</button>
                 </div>
             </div>
         </div>
@@ -50,6 +51,7 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
+            title : '',
             form: new Form({
                 description: '',
                 priority: '',
@@ -58,22 +60,48 @@ export default {
             })
         }
     },
+    props: ['data'],
+    created() {
+        if(this.data.task){
+            this.title = 'Edit task'
+            this.form.description = this.data.task.description
+            this.form.priority = this.data.task.priority
+            this.form.due_at = this.data.task.due_at
+            this.form.project_id = this.data.task.project_id
+        } else {
+            this.title = 'Quickly add task'
+        }
+    },
     computed: {
         ...mapGetters([
             'projects'
         ])
     },
     methods: {
+        ...mapActions([
+            'addTask', 'updateTask'
+        ]),
         //TODO: Close modal after Promise.all finishes
-        submitTask() {
+        submit() {
             this.form.post('/api/tasks')
                 .then(response => {
                     alert('Task has been added')
+                    this.addTask(response);
                     this.EventBus.$emit('close-modal');
                 })
                 .catch(error => {
                     console.error(error)
+                })
+        },
+        update() {
+            this.form.put('/api/tasks/' + this.data.task.id)
+                .then(response => {
+                    alert('Task has been updated')
+                    this.updateTask(response)
                     this.EventBus.$emit('close-modal');
+                })
+                .catch(error => {
+                    console.error(error)
                 })
         }
     }

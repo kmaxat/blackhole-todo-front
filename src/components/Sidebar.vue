@@ -2,21 +2,21 @@
   <div style="background-color: whitesmoke;">
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-fullwidth" @click="fetchTasks">
+        <a class="button is-primary is-fullwidth" @click="getTasks">
           Inbox
         </a>
       </div>
     </div>
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-fullwidth" @click="fetchTasks('today')">
+        <a class="button is-primary is-fullwidth" @click="getTasks('today')">
           Today
         </a>
       </div>
     </div>
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-fullwidth" @click="fetchTasks('week')">
+        <a class="button is-primary is-fullwidth" @click="getTasks('week')">
           Next 7 days
         </a>
       </div>
