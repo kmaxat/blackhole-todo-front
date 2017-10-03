@@ -2,21 +2,21 @@
   <div style="background-color: whitesmoke;">
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-fullwidth" @click="fetchTasks">
+        <a class="button is-primary is-fullwidth" @click="getTasks">
           Inbox
         </a>
       </div>
     </div>
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-fullwidth" @click="fetchTasks('today')">
+        <a class="button is-primary is-fullwidth" @click="getTasks('today')">
           Today
         </a>
       </div>
     </div>
     <div class="columns">
       <div class="column">
-        <a class="button is-primary is-fullwidth" @click="fetchTasks('week')">
+        <a class="button is-primary is-fullwidth" @click="getTasks('week')">
           Next 7 days
         </a>
       </div>
@@ -40,8 +40,26 @@
     </div>
     <div class="columns" v-for="project in projects" :key="project.id">
       <div class="column">
-        <a class="button">
-          {{ project.name }}
+        <div class="field is-grouped" style="padding-top:10px">
+          <p class="control">
+            <a class="button">
+              {{ project.name }}
+            </a>
+          </p>
+          <p class="control">
+            <a class="button has-icons" @click="editProject(project)">
+              <span class="icon">
+                <i class="fa fa-edit"></i>
+              </span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <a class="button is-success" @click="addProject">
+          Add project
         </a>
       </div>
     </div>
@@ -58,7 +76,8 @@ export default {
     }
   },
   created() {
-    this.fetchProjects()
+    this.getProjects()
+    this.fetchColors()
   },
   computed: {
     ...mapGetters([
@@ -67,8 +86,17 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchTasks', 'fetchProjects'
-    ])
+      'getTasks', 'getProjects', 'fetchColors'
+    ]),
+    addProject() {
+      this.EventBus.$emit('open-modal');
+      this.EventBus.$emit('set-modal-data', {}, 'Project');
+    },
+    editProject(project) {
+      console.warn(project)
+      this.EventBus.$emit('open-modal');
+      this.EventBus.$emit('set-modal-data', { project: project }, 'Project');
+    }
 
   },
 }

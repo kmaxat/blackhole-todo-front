@@ -39,8 +39,8 @@ export default {
   },
   methods: {
     openModal() {
-        this.EventBus.$emit('open-modal');
-        this.EventBus.$emit('set-modal-data', {}, 'Task');
+      this.EventBus.$emit('open-modal');
+      this.EventBus.$emit('set-modal-data', {}, 'Task');
     }
   }
 }

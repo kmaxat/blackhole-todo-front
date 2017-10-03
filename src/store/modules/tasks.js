@@ -1,6 +1,5 @@
 import * as types from '../mutation-types'
-import axios from '../../utils/interceptors'
-
+import api from '../../api'
 // initial state
 const state = {
     tasks: [],
@@ -11,26 +10,44 @@ const mutations = {
     [types.SET_TASKS](state, tasks) {
         state.tasks = tasks
     },
-    [types.DELETE_TASK](state, index) {
-        if (index >= 0) {
-            state.tasks.splice(index, 1);
+    [types.ADD_TASK](state, task) {
+        state.tasks.push(task)
+    },
+    [types.UPDATE_TASK](state, task) {
+        let index = state.tasks.findIndex(item => task.id == item.id)
+        if (index > -1) {
+            for (var k in task)
+                state.tasks[index][k] = task[k];
         }
     },
+    [types.DELETE_TASK](state, task) {
+        let index = state.tasks.findIndex(item => task.id == item.id)
+        if (index > -1) {
+            state.tasks.splice(index, 1)
+        }
+    },
+
 }
 
 // actions
 const actions = {
-    async fetchTasks({ commit }, range = null) {
-        const { data } = await axios.get('api/tasks', {
-            params: {
-                range: range
-            }
-        })
-        commit(types.SET_TASKS, data)
+    async getTasks({ commit }, range = null) {
+        api.getData('api/tasks', { range: range })
+            .then(response => {
+                commit(types.SET_TASKS, response)
+            }).catch(error => {
+                console.error(error);
+                console.error('Failed to fetch tasks');
+            })
     },
-    complete({ commit }, task) {
-        var index = state.tasks.indexOf(task);
-        commit(types.DELETE_TASK, index)
+    addTask({ commit }, task) {
+        commit(types.ADD_TASK, task)
+    },
+    updateTask({ commit }, task) {
+        commit(types.UPDATE_TASK, task)
+    },
+    deleteTask({ commit }, task) {
+        commit(types.DELETE_TASK, task)
     }
 }
 
