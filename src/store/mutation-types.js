@@ -8,3 +8,7 @@ export const UPDATE_USER = 'UPDATE_USER'
 
 // tasks.js
 export const SET_TASKS = 'SET_TASKS'
+export const DELETE_TASK = 'DELETE_TASK'
+
+// projects.js
+export const SET_PROJECTS = 'SET_PROJECTS'

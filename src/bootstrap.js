@@ -11,3 +11,6 @@ window.axios = axios
 
 Vue.config.productionTip = false
 Vue.use(Router)
+
+export const EventBus = new Vue()
+Object.defineProperty(Vue.prototype, 'EventBus', { value: EventBus })
