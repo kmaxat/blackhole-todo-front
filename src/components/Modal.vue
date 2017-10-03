@@ -4,11 +4,12 @@
         <div class="modal-content">
             <component :is="component" :data="data"></component>
         </div>
-        <button class="modal-close is-large" @click="active = false"></button>
+        <button class="modal-close is-large" @click="close"></button>
     </div>
 </template>
 <script>
 import Task from './modals/Task.vue'
+import Project from './modals/Project.vue'
 
 export default {
     name: 'modal',
@@ -20,7 +21,7 @@ export default {
         }
     },
     components: {
-        Task
+        Task, Project
     },
     destroyed() {
         this.EventBus.$off('set-modal-data', this.set);
@@ -30,6 +31,8 @@ export default {
     methods: {
         close() {
             this.active = false;
+            this.data = null;
+            this.component = null
         },
 
         open() {
