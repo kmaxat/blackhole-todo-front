@@ -23,6 +23,7 @@
                     </div>
                     <p class="help is-danger" v-if="form.errors.has('color_id')">{{ form.errors.get('color_id') }}</p>
                 </div>
+                <custom-select :values="labels" name="Label" label="name" :selectedValues="form.labels" :error="form.errors.get('label_id')" v-on:selected="selectLabels"></custom-select>
                 <div class="control" v-if="!data.project">
                     <button class="button is-success" @click="submit">
                         Add project
@@ -59,6 +60,7 @@ export default {
             form: new Form({
                 name: '',
                 color_id: '',
+                label_id: ''
             })
         }
     },
@@ -68,13 +70,15 @@ export default {
             this.title = 'Edit project'
             this.form.name = this.data.project.name
             this.form.color_id = this.data.project.color_id
+            this.form.labels = this.data.project.labels
+            this.selectLabels(this.data.project.labels)
         } else {
             this.title = 'Quickly add project'
         }
     },
     computed: {
         ...mapGetters([
-            'projects', 'colors'
+            'projects', 'colors', 'labels'
         ])
     },
     methods: {
@@ -124,6 +128,10 @@ export default {
                 }).catch(error => {
                     console.error(error)
                 })
+        },
+        selectLabels(labels) {
+            let ids = labels.map(item => item.id)
+            this.form.label_id = ids
         }
     }
 }

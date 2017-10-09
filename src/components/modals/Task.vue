@@ -37,6 +37,7 @@
                     </div>
                     <p class="help is-danger" v-if="form.errors.has('project_id')">{{ form.errors.get('project_id') }}</p>
                 </div>
+                <custom-select :values="labels" name="Label" label="name" :selectedValues="form.labels" :error="form.errors.get('label_id')" v-on:selected="selectLabels"></custom-select>
                 <div class="control">
                     <button class="button is-primary" @click="submit" v-if="!this.data.task">Add task</button>
                     <button class="button is-success" @click="update" v-if="this.data.task">Save changes</button>
@@ -51,35 +52,38 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     data() {
         return {
-            title : '',
+            title: '',
             form: new Form({
                 description: '',
                 priority: '',
                 due_at: '',
-                project_id: ''
+                project_id: '',
+                label_id: ''
             })
         }
     },
     props: ['data'],
     created() {
-        if(this.data.task){
+        if (this.data.task) {
             this.title = 'Edit task'
             this.form.description = this.data.task.description
             this.form.priority = this.data.task.priority
             this.form.due_at = this.data.task.due_at
-            this.form.project_id = this.data.task.project_id
+            this.form.project_id = this.data.task.project_id,
+            this.form.labels = this.data.task.labels
+            this.selectLabels(this.data.task.labels)
         } else {
             this.title = 'Quickly add task'
         }
     },
     computed: {
         ...mapGetters([
-            'projects'
+            'projects', 'labels'
         ])
     },
     methods: {
         ...mapActions([
-            'addTask', 'updateTask'
+            'addTask', 'updateTask', 'label'
         ]),
         //TODO: Close modal after Promise.all finishes
         submit() {
@@ -103,6 +107,10 @@ export default {
                 .catch(error => {
                     console.error(error)
                 })
+        },
+        selectLabels(labels) {
+            let ids = labels.map(item => item.id)
+            this.form.label_id = ids
         }
     }
 }
