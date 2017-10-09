@@ -23,21 +23,15 @@
                     </div>
                     <p class="help is-danger" v-if="form.errors.has('color_id')">{{ form.errors.get('color_id') }}</p>
                 </div>
-                <custom-select :values="labels" name="Label" label="name" :selectedValues="form.labels" :error="form.errors.get('label_id')" v-on:selected="selectLabels"></custom-select>
-                <div class="control" v-if="!data.project">
+                <div class="control" v-if="!data.label">
                     <button class="button is-success" @click="submit">
-                        Add project
+                        Add label
                     </button>
                 </div>
-                <div class="field is-grouped" v-if="data.project">
+                <div class="field is-grouped" v-if="data.label">
                     <p class="control">
                         <a class="button is-success" @click="update">
                             Save changes
-                        </a>
-                    </p>
-                    <p class="control">
-                        <a class="button is-warning" @click="archive">
-                            Archive
                         </a>
                     </p>
                     <p class="control">
@@ -60,60 +54,45 @@ export default {
             form: new Form({
                 name: '',
                 color_id: '',
-                label_id: ''
             })
         }
     },
     props: ['data'],
     created() {
-        if (this.data.project) {
-            this.title = 'Edit project'
-            this.form.name = this.data.project.name
-            this.form.color_id = this.data.project.color_id
-            this.form.labels = this.data.project.labels
-            this.selectLabels(this.data.project.labels)
+        if (this.data.label) {
+            this.title = 'Edit label'
+            this.form.name = this.data.label.name
+            this.form.color_id = this.data.label.color_id
         } else {
-            this.title = 'Quickly add project'
+            this.title = 'Quickly add label'
         }
     },
     computed: {
         ...mapGetters([
-            'projects', 'colors', 'labels'
+            'labels', 'colors'
         ])
     },
     methods: {
         ...mapActions([
-            'getProjects', 'addProject', 'updateProject', 'deleteProject'
+            'getLabels', 'addLabel', 'updateLabel', 'deleteLabel'
         ]),
         //TODO: Close modal after Promise.all finishes
         submit() {
-            this.form.post('/api/projects')
+            this.form.post('/api/labels')
                 .then(response => {
-                    alert('Project has been added')
-                    this.addProject(response)
+                    alert('Label has been added')
+                    this.addLabel(response)
                     this.EventBus.$emit('close-modal');
                 })
                 .catch(error => {
                     console.error(error)
                 })
         },
-        archive() {
-            //TODO: Sometimes I have to add data, and sometimes I don't have. 
-            //Fix inconsistency with response.data
-            axios.put('/api/projects/' + this.data.project.id, {
-                status: 'archived'
-            }).then(response => {
-                this.deleteProject(this.data.project)
-                this.EventBus.$emit('close-modal');
-            }).catch(error => {
-                console.error(error)
-            })
-        },
         update() {
-            this.form.put('/api/projects/' + this.data.project.id)
+            this.form.put('/api/labels/' + this.data.label.id)
                 .then(response => {
-                    alert('Project has been updated')
-                    this.updateProject(response)
+                    alert('Label has been updated')
+                    this.updateLabel(response)
                     this.EventBus.$emit('close-modal');
                 })
                 .catch(error => {
@@ -121,17 +100,13 @@ export default {
                 })
         },
         remove() {
-            axios.delete('api/projects/' + this.data.project.id)
+            axios.delete('api/labels/' + this.data.label.id)
                 .then(response => {
-                    this.deleteProject(this.data.project)
+                    this.deleteLabel(this.data.label)
                     this.EventBus.$emit('close-modal');
                 }).catch(error => {
                     console.error(error)
                 })
-        },
-        selectLabels(labels) {
-            let ids = labels.map(item => item.id)
-            this.form.label_id = ids
         }
     }
 }

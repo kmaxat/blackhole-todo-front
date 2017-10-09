@@ -17,5 +17,12 @@ export const SET_PROJECTS = 'SET_PROJECTS'
 export const ADD_PROJECT = 'ADD_PROJECT'
 export const UPDATE_PROJECT = 'UPDATE_PROJECT'
 export const DELETE_PROJECT = 'DELETE_PROJECT'
+
 // colors.js
 export const SET_COLORS = 'SET_COLORS'
+
+// labels.js
+export const SET_LABELS = 'SET_LABELS'
+export const ADD_LABEL = 'ADD_LABEL'
+export const UPDATE_LABEL = 'UPDATE_LABEL'
+export const DELETE_LABEL = 'DELETE_LABEL'

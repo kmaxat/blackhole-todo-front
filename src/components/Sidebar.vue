@@ -21,63 +21,29 @@
         </a>
       </div>
     </div>
-    <div class="columns">
-      <div class="column">
-        <div class="tabs is-small">
-          <ul>
-            <li class="is-active">
-              <a>Projects</a>
-            </li>
-            <li>
-              <a>Labels</a>
-            </li>
-            <li>
-              <a>Filters</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="columns" v-for="project in projects" :key="project.id">
-      <div class="column">
-        <div class="field is-grouped" style="padding-top:10px">
-          <p class="control">
-            <a class="button">
-              {{ project.name }}
-            </a>
-          </p>
-          <p class="control">
-            <a class="button has-icons" @click="editProject(project)">
-              <span class="icon">
-                <i class="fa fa-edit"></i>
-              </span>
-            </a>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column">
-        <a class="button is-success" @click="addProject">
-          Add project
-        </a>
-      </div>
-    </div>
+    <tabs :tabs="tabs"></tabs>
   </div>
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Tabs from './Tabs.vue'
 
 export default {
   name: 'sidebar',
   data() {
     return {
-
+      tabs: [
+        'Projects', 'Labels', 'Filters'
+      ]
     }
+  },
+  components : {
+    Tabs
   },
   created() {
     this.getProjects()
-    this.fetchColors()
+    this.getColors()
+    this.getLabels()
   },
   computed: {
     ...mapGetters([
@@ -86,7 +52,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getTasks', 'getProjects', 'fetchColors'
+      'getTasks', 'getProjects', 'getColors', 'getLabels'
     ]),
     addProject() {
       this.EventBus.$emit('open-modal');

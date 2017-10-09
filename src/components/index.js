@@ -5,6 +5,7 @@ import Loading from './Loading.vue'
 import Modal from './Modal.vue'
 import Navbar from './Navbar.vue'
 import Sidebar from './Sidebar.vue'
+import CustomSelect from './CustomSelect.vue'
 
 Vue.component(Child.name, Child)
 Vue.component(Loader.name, Loader)
@@ -12,3 +13,4 @@ Vue.component(Loading.name, Loading)
 Vue.component(Modal.name, Modal)
 Vue.component(Navbar.name, Navbar)
 Vue.component(Sidebar.name, Sidebar)
+Vue.component(CustomSelect.name, CustomSelect)
