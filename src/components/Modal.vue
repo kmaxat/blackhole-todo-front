@@ -10,6 +10,8 @@
 <script>
 import Task from './modals/Task.vue'
 import Project from './modals/Project.vue'
+//CustomLabel to suppress Vue warning about using HTML tags
+import CustomLabel from './modals/Label.vue'
 
 export default {
     name: 'modal',
@@ -21,7 +23,7 @@ export default {
         }
     },
     components: {
-        Task, Project
+        Task, Project, CustomLabel
     },
     destroyed() {
         this.EventBus.$off('set-modal-data', this.set);
