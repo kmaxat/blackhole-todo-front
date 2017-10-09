@@ -15,7 +15,7 @@ const mutations = {
 
 // actions
 const actions = {
-    async fetchColors({ commit }) {
+    async getColors({ commit }) {
         const { data } = await axios.get('api/colors')
         commit(types.SET_COLORS, data)
     },
